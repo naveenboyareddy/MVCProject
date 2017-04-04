@@ -9,20 +9,22 @@ namespace Vidly1.Controllers
 {
     public class MoviesController : Controller
     {
-        // GET: Movies/random
-        public ActionResult random()
-        {
-            var movie = new Movie() { Name = "SHARK!" };
-            return View(movie);
-        }
-        [Route("Movies/customers")]
-        public ActionResult customers()
-        {
-            var customer1 = new customer() { name = "naveen" };
-            var customer2 = new customer() { name = "naga" };
 
 
-            return View();
+        public ViewResult index()
+        {
+            var movies = getmovies();
+            return View(movies);
         }
+        private IEnumerable<Movie> getmovies()
+        {
+            return new List<Movie>
+            {
+                new Movie{ Id = 1, Name = "SHARK!" },
+                new Movie{ Id = 2, Name = "HUSH"}
+           
+        };
+        }
+       
     }
 }
