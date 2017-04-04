@@ -11,7 +11,7 @@ namespace Vidly1.Controllers
     {
 
 
-        public ViewResult index()
+        public ViewResult Index()
         {
             var movies = getmovies();
             return View(movies);

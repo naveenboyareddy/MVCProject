@@ -159,6 +159,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\customerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
@@ -233,6 +234,8 @@
     <Content Include="Views\Movies\random.cshtml" />
     <Content Include="Views\Shared\_navbar.cshtml" />
     <Content Include="Views\Movies\index.cshtml" />
+    <Content Include="Views\customer\Index.cshtml" />
+    <Content Include="Views\customer\details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
