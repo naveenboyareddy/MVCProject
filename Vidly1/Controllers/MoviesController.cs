@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Vidly1.Models;
+using Vidly1.ViewModels;
 using System.Data.Entity;
-
 
 namespace Vidly1.Controllers
 {
@@ -21,6 +21,8 @@ namespace Vidly1.Controllers
         {
             _context.Dispose();
         }
+
+
         public ViewResult Index()
         {
             var movies = _context.movies.Include(c => c.Genre).ToList();
@@ -36,11 +38,5 @@ namespace Vidly1.Controllers
             return View(movie);
 
         }
-
-
-
-
-
     }
-
 }
