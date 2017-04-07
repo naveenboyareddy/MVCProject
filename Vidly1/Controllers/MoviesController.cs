@@ -20,69 +20,99 @@ namespace Vidly1.Controllers
         {
             _context = new ApplicationDbContext();
         }
+
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
         }
-        public ActionResult New()
+
+        public ViewResult Index()
         {
-            var genres = _context.genres.ToList();
-            var viewmodel = new MovieFormViewModel
-            {
-                genres = genres
-            };
-            return View("MovieForm", viewmodel);
+            var movies = _context.Movies.Include(m => m.Genre).ToList();
+
+            return View(movies);
         }
+
+        public ViewResult New()
+        {
+            var genres = _context.Genres.ToList();
+
+            var viewModel = new MovieFormViewModel
+            {
+                Genres = genres
+            };
+
+            return View("MovieForm", viewModel);
+        }
+
         public ActionResult Edit(int id)
         {
-            var movie = _context.movies.SingleOrDefault(c => c.Id == id);
+            var movie = _context.Movies.SingleOrDefault(c => c.Id == id);
+
             if (movie == null)
                 return HttpNotFound();
-            var viewmodel = new MovieFormViewModel
+
+            var viewModel = new MovieFormViewModel
             {
-                movies = movie,
-                genres = _context.genres.ToList()
+                Movie = movie,
+                Genres = _context.Genres.ToList()
             };
-            return View("MovieForm", viewmodel);
+
+            return View("MovieForm", viewModel);
         }
-          [HttpPost]
+
+
+        public ActionResult Details(int id)
+        {
+            var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
+
+            if (movie == null)
+                return HttpNotFound();
+
+            return View(movie);
+
+        }
+
+
+        //// GET: Movies/Random
+        ////public ActionResult Random()
+        ////{
+        ////    var movie = new Movie() { Name = "Shrek!" };
+        ////    var customers = new List<Customer>
+        ////    {
+        ////        new Customer { Name = "Customer 1" },
+        ////        new Customer { Name = "Customer 2" }
+        ////    };
+
+        ////    var viewModel = new RandomMovieViewModel
+        ////    {
+        ////        Movie = movie,
+        ////        Customers = customers
+        ////    };
+
+        ////    return View(viewModel);
+        //}
+
+        [HttpPost]
         public ActionResult Save(Movie movie)
         {
             if (movie.Id == 0)
             {
                 movie.DateAdded = DateTime.Now;
-              
-                _context.movies.Add(movie);
+                _context.Movies.Add(movie);
             }
             else
             {
-                var movieindb = _context.movies.Single(c => c.Id == movie.Id);
-
-                movieindb.Name = movie.Name;
-                movieindb.ReleaseDate = movie.ReleaseDate;
-                movieindb.GenreId = movie.GenreId;
-                //movieindb.NumbersInStock = movie.NumbersInStock;
+                var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
+                movieInDb.Name = movie.Name;
+                movieInDb.GenreId = movie.GenreId;
+                movieInDb.NumberInStock = movie.NumberInStock;
+                movieInDb.ReleaseDate = movie.ReleaseDate;
             }
-           
-                _context.SaveChanges();
-            
-            
+
+            _context.SaveChanges();
+
             return RedirectToAction("Index", "Movies");
-        }
-        public ViewResult Index()
-        {
-            var movies = _context.movies.Include(c => c.Genre).ToList();
-            return View(movies);
-        }
-        public ActionResult Details(int id)
-        {
-            var movie = (_context.movies).Include(c => c.Genre).SingleOrDefault(x => x.Id == id);
-            if (movie == null)
-
-                return HttpNotFound();
-
-            return View(movie);
-
         }
     }
 }

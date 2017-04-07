@@ -8,17 +8,16 @@ namespace Vidly1.ViewModels
 {
     public class MovieFormViewModel
     {
-        public IEnumerable<Genre> genres { set; get; }
-        public Movie movies { get; set; }
+        public IEnumerable<Genre> Genres { get; set; }
+        public Movie Movie { get; set; }
         public string Title
         {
             get
             {
-                     if(movies != null && movies.Id !=0)
+                if (Movie != null && Movie.Id != 0)
+                    return "Edit Movie";
 
-                return "Edit Movie";   
-
-                    return "New Movie";
+                return "New Movie";
             }
         }
     }
