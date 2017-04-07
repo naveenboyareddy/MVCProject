@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using Vidly1.Models;
 using Vidly1.ViewModels;
@@ -22,7 +19,7 @@ namespace Vidly1.Controllers
         {
             _context.Dispose();
         }
-
+       
         public ActionResult New()
         {
             var membershiptypes = _context.membershiptypes.ToList();
