@@ -28,8 +28,7 @@ namespace Vidly1.Controllers.Api
         {
             var customerdtos = _context.customers
                 .Include(c => c.MembershipType)
-                .ToList().
-                Select(Mapper.Map<customer, CustomerDto>);
+                .ToList().Select(Mapper.Map<customer, CustomerDto>);
             return Ok(customerdtos);
  
         }
