@@ -16,7 +16,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44300</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -41,6 +41,21 @@
   <ItemGroup>
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.4.1.0\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Ado">
+      <HintPath>..\packages\Glimpse.Ado.1.7.3\lib\net45\Glimpse.Ado.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.AspNet">
+      <HintPath>..\packages\Glimpse.AspNet.1.8.0\lib\net45\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core">
+      <HintPath>..\packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.EF6">
+      <HintPath>..\packages\Glimpse.EF6.1.6.5\lib\net45\Glimpse.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Mvc5">
+      <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -186,6 +201,7 @@
     <Compile Include="Dtos\GenreDto.cs" />
     <Compile Include="Dtos\MembershipTypeDto.cs" />
     <Compile Include="Dtos\MovieDtos.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -229,6 +245,22 @@
     <Compile Include="Migrations\201704072258136_AddingDataInMovies.Designer.cs">
       <DependentUpon>201704072258136_AddingDataInMovies.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704121408593_seedusers.cs" />
+    <Compile Include="Migrations\201704121408593_seedusers.Designer.cs">
+      <DependentUpon>201704121408593_seedusers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704121939532_AddingDrivingLicenseToApplicationUser.cs" />
+    <Compile Include="Migrations\201704121939532_AddingDrivingLicenseToApplicationUser.Designer.cs">
+      <DependentUpon>201704121939532_AddingDrivingLicenseToApplicationUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704131636446_DropPhoneFromApplicationUser.cs" />
+    <Compile Include="Migrations\201704131636446_DropPhoneFromApplicationUser.Designer.cs">
+      <DependentUpon>201704131636446_DropPhoneFromApplicationUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704131638487_AddPhoneToApplicationUser.cs" />
+    <Compile Include="Migrations\201704131638487_AddPhoneToApplicationUser.Designer.cs">
+      <DependentUpon>201704131638487_AddPhoneToApplicationUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\customer.cs" />
@@ -238,6 +270,7 @@
     <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Models\Min18YearsIfAMemeber.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\NewCustomerViewModel.cs" />
@@ -477,12 +510,13 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Movies\random.cshtml" />
     <Content Include="Views\Shared\_navbar.cshtml" />
-    <Content Include="Views\Movies\index.cshtml" />
+    <Content Include="Views\Movies\List.cshtml" />
     <Content Include="Views\customer\Index.cshtml" />
     <Content Include="Views\customer\details.cshtml" />
     <Content Include="Views\Movies\Details.cshtml" />
     <Content Include="Views\customer\Customerform.cshtml" />
     <Content Include="Views\Movies\MovieForm.cshtml" />
+    <Content Include="Views\Movies\ReadOnlyList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -525,6 +559,18 @@
     <EmbeddedResource Include="Migrations\201704072258136_AddingDataInMovies.resx">
       <DependentUpon>201704072258136_AddingDataInMovies.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704121408593_seedusers.resx">
+      <DependentUpon>201704121408593_seedusers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704121939532_AddingDrivingLicenseToApplicationUser.resx">
+      <DependentUpon>201704121939532_AddingDrivingLicenseToApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704131636446_DropPhoneFromApplicationUser.resx">
+      <DependentUpon>201704131636446_DropPhoneFromApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704131638487_AddPhoneToApplicationUser.resx">
+      <DependentUpon>201704131638487_AddPhoneToApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -544,7 +590,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51133</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51133/</IISUrl>
+          <IISUrl>https://localhost:44300/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

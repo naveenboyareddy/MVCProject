@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Globalization;
+
 using System.Linq;
-using System.Security.Claims;
+
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Vidly1.Models;
 
@@ -151,10 +152,16 @@ namespace Vidly1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { 
+                    UserName = model.Email, 
+                    Email = model.Email,
+                DrivingLicense = model.DrivingLicense,
+                Phone = model.Phone   
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -320,6 +327,7 @@ namespace Vidly1.Controllers
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
+        
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
@@ -367,7 +375,7 @@ namespace Vidly1.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, DrivingLicense = model.DrivingLicense, Phone =model.Phone };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
