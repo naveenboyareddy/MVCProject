@@ -9,12 +9,18 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Testing|Any CPU = Testing|Any CPU
+		TestingEnvironment|Any CPU = TestingEnvironment|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F34C70FE-FDA6-4ADC-87F1-F06F44A50F68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F34C70FE-FDA6-4ADC-87F1-F06F44A50F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F34C70FE-FDA6-4ADC-87F1-F06F44A50F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F34C70FE-FDA6-4ADC-87F1-F06F44A50F68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F34C70FE-FDA6-4ADC-87F1-F06F44A50F68}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{F34C70FE-FDA6-4ADC-87F1-F06F44A50F68}.Testing|Any CPU.Build.0 = Testing|Any CPU
+		{F34C70FE-FDA6-4ADC-87F1-F06F44A50F68}.TestingEnvironment|Any CPU.ActiveCfg = TestingEnvironment|Any CPU
+		{F34C70FE-FDA6-4ADC-87F1-F06F44A50F68}.TestingEnvironment|Any CPU.Build.0 = TestingEnvironment|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

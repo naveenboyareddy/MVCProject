@@ -24,10 +24,15 @@ namespace Vidly1.Controllers.Api
         }
         //Get/Api/Customers
 
-        public IHttpActionResult GetCustomers()
+        public IHttpActionResult GetCustomers(string query = null)
         {
-            var customerdtos = _context.customers
-                .Include(c => c.MembershipType)
+            var customersquery = _context.customers
+                .Include(c => c.MembershipType);
+
+                if(!string.IsNullOrWhiteSpace(query))
+                    customersquery = customersquery.Where(c => c.name.Contains(query));
+
+                var customerdtos = customersquery
                 .ToList().Select(Mapper.Map<customer, CustomerDto>);
             return Ok(customerdtos);
  
